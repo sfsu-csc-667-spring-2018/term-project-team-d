@@ -4,9 +4,21 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testsRouter = require('./routes/tests');
+var errorRouter = require('./routes/error');
+
+var indexRouter = require('./routes/index');
+var loginRouter = require('./routes/authentication/login');
+var registerRouter = require('./routes/authentication/register');
+var logoutRouter = require('./routes/authentication/logout');
+var lobbyRouter = require('./routes/lobby');
+
+
+//var chatRouter = require('./routes/chat/message');
+//var moveRouter = require('./routes/game/move');
+//var gameIdRouter = require('.routes/game/id');
+
 
 if( process.env.NODE_ENV === 'development' ){
   require( "dotenv" ).config();
@@ -27,6 +39,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/tests', testsRouter);
+app.use('/error', errorRouter);
+app.use('/login', loginRouter);
+app.use('/register', registerRouter);
+app.use('/logout', logoutRouter);
+app.use('/lobby', lobbyRouter);
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
