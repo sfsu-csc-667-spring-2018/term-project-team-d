@@ -3,7 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
 var favicon = require('serve-favicon');
+
+var passport = require('passport');
+
 
 var usersRouter = require('./routes/users');
 var testsRouter = require('./routes/tests');
@@ -21,12 +25,23 @@ var lobbyRouter = require('./routes/lobby');
 //var moveRouter = require('./routes/game/move');
 //var gameIdRouter = require('.routes/game/id');
 
+require('./auth/index')(passport);
 
 if( process.env.NODE_ENV === 'development' ){
   require( "dotenv" ).config();
 }
 
-var app = express();
+const app = express();
+
+// app.use(
+//   session({
+//     store: new (require('connect-pg-simple')(session))(),
+//     secret: process.env.COOKIE_SECRET,
+//     saveUninitialized: false,
+//     resave: false,
+//     cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }
+//   })
+// );
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,7 +52,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(favicon('./public/favicon.ico'));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -1,16 +1,21 @@
 const bcrypt = require('bcrypt');
-const db = require('./index');
+const db = require('../index');
 
 const create = (email, password) =>
-  bcrypt.hash(password, 10).then(hash =>
-    db.one(
-      'INSERT INTO users (email, hash) VALUES (${email}, ${hash}) RETURNING id, email',
-      {
-        email,
-        hash
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(password, salt, function(err, hash) {
+      if (err) {
+        return err;
       }
-    )
-  );
+      db.one(
+        'INSERT INTO users (email, hash) VALUES (${email}, ${hash}) RETURNING id, email',
+        {
+          email,
+          hash
+        }
+      )        
+    });
+  }); 
 
 const find = email => db.one('SELECT * FROM users WHERE email=${email}');
 
