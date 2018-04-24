@@ -3,7 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+var favicon = require('serve-favicon');
+
 var passport = require('passport');
+
 
 var usersRouter = require('./routes/users');
 var testsRouter = require('./routes/tests');
@@ -14,6 +18,7 @@ var loginRouter = require('./routes/authentication/login');
 var registerRouter = require('./routes/authentication/register');
 var logoutRouter = require('./routes/authentication/logout');
 var lobbyRouter = require('./routes/lobby');
+
 
 
 //var chatRouter = require('./routes/chat/message');
@@ -47,8 +52,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(favicon('./public/favicon.ico'));
+
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
