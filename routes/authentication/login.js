@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var passport = require('passport');
+
 router.get('/', function (req, res) {
   res.render('login',
     { title: 'Login - CSC 667',
@@ -10,10 +12,12 @@ router.get('/', function (req, res) {
       js: ['jquery.min.js','bootstrap.min.js']
     }
   );
-})
+});
 
-router.post('/', function (req, res) {
-  
-})
+router.post('/', 
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login'
+  })
+);
 
 module.exports = router;
