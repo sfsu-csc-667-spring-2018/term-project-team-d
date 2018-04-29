@@ -7,10 +7,6 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        references: {
-          model: observers,
-          key: game_id
-        }
       },
       black: {
         type: Sequelize.INTEGER
