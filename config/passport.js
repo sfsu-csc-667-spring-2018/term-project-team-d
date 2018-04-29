@@ -7,9 +7,9 @@ module.exports = function(passport) {
   passport.use(new LocalStrategy(
     function(username, password, done) {
       // Match Username
-      models.User.findOne({
+      models.user.findOne({
         where: {
-          username: username
+          email: username
         }
       }).then(function(user, err) {
         if (err) {
@@ -41,7 +41,7 @@ module.exports = function(passport) {
   });
 
   passport.deserializeUser(function(id, done) {
-    models.User.findById(id).then(function(user) {
+    models.user.findById(id).then(function(user) {
       console.log('deserializing user:', user.dataValues);
       done(null, user);
     }).catch(function(err) {

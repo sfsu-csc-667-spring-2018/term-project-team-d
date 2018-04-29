@@ -66,7 +66,7 @@ app.use(expressValidator({
 }));
 
 app.use(session({
-  secret: 'csc648',
+  secret: 'csc667',
   resave: false,
   saveUninitialized: false
 }));
