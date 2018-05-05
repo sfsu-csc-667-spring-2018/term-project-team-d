@@ -1,19 +1,19 @@
 extends layout
-
+block css
+    link(rel='stylesheet', href='/stylesheets/game.css')
 block content
-    .container
-        .chessboard
-            - var row = 0
-            while row++ < 8
-               - var col = 0
-                while col++ < 8
-                    if row % 2 === 0
-                        if col % 2 === 0
-                            .black(row = row, col = col)
-                        else
-                            .white(row = row, col = col)
-                    if row % 2 === 1
-                        if col % 2 === 0
-                            .white(row = row, col = col)
-                        else
-                            .black(row = row, col = col)
+    .chessboard
+        - var row = 0
+        while row++ < 8
+           - var col = 0
+            while col++ < 8
+                if row % 2 === 0
+                    if col % 2 === 0
+                        .black(row = row, col = col)
+                    else
+                        .white(row = row, col = col)
+                if row % 2 === 1
+                    if col % 2 === 0
+                        .white(row = row, col = col)
+                    else
+                        .black(row = row, col = col)
