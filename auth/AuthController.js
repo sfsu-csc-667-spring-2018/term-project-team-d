@@ -19,7 +19,7 @@ module.exports.create = function(request, response) {
       errors: errors
     });
   } else {
-    user = new models.User({
+    user = new models.user({
       email: email,
       password: password
     });
