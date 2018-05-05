@@ -1,5 +1,8 @@
 var createError = require('http-errors');
 var express = require('express');
+const app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -20,8 +23,6 @@ var registerRouter = require('./routes/authentication/register');
 var logoutRouter = require('./routes/authentication/logout');
 var lobbyRouter = require('./routes/lobby');
 var gameRouter = require('./routes/game');
-const app = express();
-
 
 //var chatRouter = require('./routes/chat/message');
 //var moveRouter = require('./routes/game/move');
@@ -45,6 +46,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 
 
 app.use(express.static(path.join(__dirname, 'public')));
