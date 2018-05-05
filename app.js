@@ -2,7 +2,8 @@ var createError = require('http-errors');
 var express = require('express');
 const app = express();
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -107,4 +108,19 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+  console.log("hello 1");
+io.on('connection', function(client) {
+  console.log('Client connected (io)...');
+
+  client.on('join', function(data) {
+    console.log(data);
+  });
+
+  client.on('messages', function(data){
+    client.emit('thread', data);
+    client.broadcast.emit('thread', data);
+  });
+});
+console.log("hello 2");
+server.listen(7777);
 module.exports = app;

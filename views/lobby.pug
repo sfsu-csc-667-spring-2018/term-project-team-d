@@ -8,11 +8,10 @@ block content
           h5.card-title Join a Game
     .col-md-6
       .card
-        #content(style='width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;')
-        .controls
-          input.field(style='width:450px;')
-          input.send(type='button', value='send')
-
-block scripts
-  script(src='js/chat.js')
-  script(src='/socket.io/socket.io.js')
+        ul#thread(style='width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;')
+        form
+          input#message(type="text" placeholder="message")
+          input(type="submit" value="Send")
+        script(src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous")
+        script(src="/socket.io/socket.io.js")
+        script(src="client.js")
