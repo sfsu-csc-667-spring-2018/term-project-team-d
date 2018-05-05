@@ -32,7 +32,7 @@ if( process.env.NODE_ENV === 'development' ){
   require( "dotenv" ).config();
 }
 
-
+app.io = require('./sockets')
 
 
 
@@ -71,7 +71,7 @@ app.use(session({
   saveUninitialized: false
 }));
 
-app.use(favicon('./public/favicon.ico'));
+app.use(favicon('./public/img/favicon.ico'));
 
 app.use(passport.initialize());
 app.use(passport.session());
