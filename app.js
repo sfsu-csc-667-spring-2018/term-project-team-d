@@ -108,7 +108,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-  console.log("hello 1");
 io.on('connection', function(client) {
   console.log('Client connected (io)...');
 
@@ -121,6 +120,6 @@ io.on('connection', function(client) {
     client.broadcast.emit('thread', data);
   });
 });
-console.log("hello 2");
+
 server.listen(7777);
 module.exports = app;
