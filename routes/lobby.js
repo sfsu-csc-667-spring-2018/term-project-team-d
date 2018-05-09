@@ -4,6 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var router = express.Router();
 const AuthController = require('../auth/AuthController');
+var port = process.env.PORT || 3000;
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
