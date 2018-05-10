@@ -6,10 +6,12 @@ block content
       .card
         .card-body  
           h5.card-title Join a Game
+          form(method='POST' action = '/game/create')
+            button.btn.btn-primaty(type='submit') CREATE GAME
     .col-md-6
       .card
         ul#thread(style='width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;')
-        form
+        form#chat
           input#message(type="text" placeholder="message" style='width:450px;')
           input(type="submit" value="Send")
         script(src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous")

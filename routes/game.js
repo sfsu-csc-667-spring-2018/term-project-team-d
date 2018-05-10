@@ -10,5 +10,9 @@ router.get('/', function (req, res) {
   );
 });
 
+router.post('/create', function(req, res, next){
+  var psql = 'INSERT INTO games (black, white, turn) VALUES(0, 1, 1)';
+})
+
 
 module.exports = router;

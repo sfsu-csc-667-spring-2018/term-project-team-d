@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
       user: req.user,
       description: 'Term Project',
       css: ['bootstrap.min.css','font-awesome.min.css'],
-      js: ['jquery.min.js','bootstrap.min.js','chat.js','lobby.js']
+      js: ['jquery.min.js','bootstrap.min.js','chat.js','lobby.js','game.js']
     }
   );
 });
