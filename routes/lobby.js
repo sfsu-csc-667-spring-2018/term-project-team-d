@@ -7,7 +7,7 @@ const AuthController = require('../auth/AuthController');
 var port = process.env.PORT || 3000;
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', AuthController.isAuthenticated, function(req, res, next) {
   res.render('lobby',
     { title: 'Chess Lobby',
       user: req.user,

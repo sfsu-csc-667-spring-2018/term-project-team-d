@@ -1,18 +1,20 @@
 var express = require('express');
 var router = express.Router();
+const GameController = require('../db/games/')
+const AuthController = require('../auth/AuthController')
 
-router.get('/', function (req, res) {
-  res.render('game',
-    { title: 'game - CSC 667',
-      description: 'Term Project',
-      css: ['game.css'],
-    }
-  );
+router.get('/:id', function(request,response) {
+  game = GameController.getGame(request,response);
+  response.render('game',
+      {
+        title: 'game - CSC 667',
+        description: 'Term Project',
+        css: ['game.css'],
+        games: game
+      }
+    ); 
 });
 
-router.post('/create', function(req, res, next){
-  var psql = 'INSERT INTO games (black, white, turn) VALUES(0, 1, 1)';
-})
-
+router.post('/create',  GameController.create)
 
 module.exports = router;
