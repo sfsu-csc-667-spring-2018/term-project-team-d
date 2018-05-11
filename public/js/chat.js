@@ -10,7 +10,7 @@
          });
 
          // prevents form from submitting and sends a message to server
-         $('form').submit(function(){
+         $('#chat').submit(function(){
             var message = $('#message').val();
             socket.emit('messages', message);
             this.reset();
