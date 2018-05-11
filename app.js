@@ -1,5 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
+const app = express();
+var http = require('http').Server(app);
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -19,8 +23,7 @@ var loginRouter = require('./routes/authentication/login');
 var registerRouter = require('./routes/authentication/register');
 var logoutRouter = require('./routes/authentication/logout');
 var lobbyRouter = require('./routes/lobby');
-const app = express();
-
+var gameRouter = require('./routes/game');
 
 //var chatRouter = require('./routes/chat/message');
 //var moveRouter = require('./routes/game/move');
@@ -32,7 +35,7 @@ if( process.env.NODE_ENV === 'development' ){
   require( "dotenv" ).config();
 }
 
-
+app.io = require('./sockets')
 
 
 
@@ -44,6 +47,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -71,7 +75,7 @@ app.use(session({
   saveUninitialized: false
 }));
 
-app.use(favicon('./public/favicon.ico'));
+app.use(favicon('./public/img/favicon.ico'));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -85,6 +89,7 @@ app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/logout', logoutRouter);
 app.use('/lobby', lobbyRouter);
+app.use('/game', gameRouter);
 
 
 // catch 404 and forward to error handler
@@ -103,4 +108,18 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+io.on('connection', function(client) {
+  console.log('Client connected (io)...');
+
+  client.on('join', function(data) {
+    console.log(data);
+  });
+
+  client.on('messages', function(data){
+    client.emit('thread', data);
+    client.broadcast.emit('thread', data);
+  });
+});
+
+server.listen(7777);
 module.exports = app;
