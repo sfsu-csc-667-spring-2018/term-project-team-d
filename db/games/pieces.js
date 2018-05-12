@@ -15,12 +15,10 @@ module.exports.populate = function(gameId) {
 }
 
 module.exports.getPieces = function(gameId) {
-  models.game_pieces.findAll({
+  return models.game_pieces.findAll({
     where: {
       game_id: gameId
     }
-  }).then(data => {
-    return data;
   }).catch(err => {
     console.log(err)
   })

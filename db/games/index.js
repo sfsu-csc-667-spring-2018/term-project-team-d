@@ -19,12 +19,10 @@ module.exports.create = function(request, response) {
 }
 
 module.exports.getGame = function(request, response){
-  models.games.findOne({
+  return models.games.findOne({
     where: {
       id: request.params.id
     }
-  }).then(data => {
-    return data;
   }).catch(err => {
     console.log(err)
   });
