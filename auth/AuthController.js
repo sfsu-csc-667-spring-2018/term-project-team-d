@@ -52,7 +52,7 @@ module.exports.login = function(request, response, next) {
 
 module.exports.logout = function(request, response, next) {
   request.logout();
-  response.redirect('/');
+  response.redirect('/login');
 };
 
 module.exports.isAuthenticated = function(request, response, next) {
