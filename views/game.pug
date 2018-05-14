@@ -20,7 +20,30 @@ block content
           else
             .cell(row = row, col = col, white)
     each piece in pieces
-      .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9817;        
-                  
-    
+      if piece.user_id === games.white
+        if piece.piece_id === 1
+          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9817;        
+        else if piece.piece_id === 2
+          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9816;
+        else if piece.piece_id === 3
+          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9815;
+        else if piece.piece_id === 4
+          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9814;
+        else if piece.piece_id === 5
+          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9813;
+        else if piece.piece_id === 6
+          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9812;
+      else
+        if piece.piece_id === 1
+          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9823;        
+        else if piece.piece_id === 2
+          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9822;
+        else if piece.piece_id === 3
+          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9821;
+        else if piece.piece_id === 4
+          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9820;
+        else if piece.piece_id === 5
+          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9819;
+        else if piece.piece_id === 6
+          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9818;
 
