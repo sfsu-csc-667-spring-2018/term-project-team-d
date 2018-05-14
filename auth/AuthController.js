@@ -15,7 +15,7 @@ module.exports.create = function(request, response) {
   let errors = request.validationErrors();
 
   if (errors) {
-    response.render('/sign-up', {
+    response.render('/register', {
       errors: errors
     });
   } else {
