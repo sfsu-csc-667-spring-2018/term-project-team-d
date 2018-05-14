@@ -1,36 +1,37 @@
 $width: 50px
 $height: 50px
 
-// =cell
-//   @for $i from 1 through 8
-//     .cell
-//       &[row="#{$i}"]
-//         margin-top:  $width * #{$i}
-//       &[col="#{$i}"]
-//         margin-left: $height * #{$i}
-//       black
-//         background-color: #999
-//       white
-//         background-color: #fff;        
-// +cell
+
+.chessboard 
+  width: 450px
+  height: 450px
+  margin: 20px
+  border: 25px solid #333
+
+
+  
+=cell  
+  @for $i from 1 through 8
+    .cell
+      $j: $i - 1
+      &[row="#{$i}"]
+        margin-top:  $width * $j
+      &[col="#{$i}"]
+        margin-left: $height * $j
+      &[black]
+        background-color: #999
+      &[white]
+        background-color: #fff  
+    
++cell
 =piece
   @for $i from 1 through 8
     .piece
-      float: left
+      $j: $i - 1
       &[row="#{$i}"]
-        margin-top: $width * #{$i} + 5
-        font-size: 35px
-        text-align:center
-        vertical-align:middle
-        z-index: 9999
-        position:relative        
+        margin-top: $height * $j
       &[col="#{$i}"]
-        margin-left: $height * #{$i} + 5
-        font-size: 35px
-        text-align:center
-        vertical-align:middle
-        z-index: 9999
-        position:relative
+        margin-left: $width * $j + 7
 +piece
 
 

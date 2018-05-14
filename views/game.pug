@@ -2,25 +2,25 @@ extends layout
 block css
     link(rel='stylesheet', href='/stylesheets/game.css')
 block content
-  main#root
-    div(style="position: relative; overflow: hidden; width: 100%;")
-      .chessboard
-        - var row = 0
-        while row++ < 8
-          - var col = 0
-          while col++ < 8
-            if row % 2 === 0
-              if col % 2 === 0
-                .cell(row = row, col = col)                    
-              else
-                .cell(row = row, col = col)
-            if row % 2 === 1
-              if col % 2 === 0
-                .cell(row = row, col = col)
-              else
-                .cell(row = row, col = col)
-        each piece in pieces
-          .piece(row=piece.y, col=piece.x) &#9817;        
-                    
+
+  //- div(style="position: relative; overflow: hidden; width: 100%;")
+  .chessboard(style="position: relative")
+    - var row = 0
+    while row++ < 8
+      - var col = 0
+      while col++ < 8
+        if row % 2 === 0
+          if col % 2 === 0
+            .cell(row = row, col = col, black)                     
+          else
+            .cell(row = row, col = col, white)
+        if row % 2 === 1
+          if col % 2 === 0
+            .cell(row = row, col = col, white)
+          else
+            .cell(row = row, col = col, black)
+    each piece in pieces
+      .piece(row=piece.y, col=piece.x) &#9817;        
+                  
     
 
