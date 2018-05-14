@@ -11,14 +11,14 @@ block content
       while col++ < 8
         if row % 2 === 0
           if col % 2 === 0
-            .cell(row = row, col = col, black)                     
-          else
-            .cell(row = row, col = col, white)
-        if row % 2 === 1
-          if col % 2 === 0
-            .cell(row = row, col = col, white)
+            .cell(row = row, col = col, white)                     
           else
             .cell(row = row, col = col, black)
+        if row % 2 === 1
+          if col % 2 === 0
+            .cell(row = row, col = col, black)
+          else
+            .cell(row = row, col = col, white)
     each piece in pieces
       .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9817;        
                   
