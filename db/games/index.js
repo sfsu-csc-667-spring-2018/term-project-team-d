@@ -11,7 +11,7 @@ module.exports.create = function(request, response) {
   models.games.create(newGame)
     .then(game => {
       gameId = game.dataValues.id
-      gamePieces.populate(gameId)
+      gamePieces.populate(gameId, game.dataValues.white)
       return response.redirect('/game/' + gameId)
     }).catch(err => {
       console.log(err)
