@@ -19,7 +19,7 @@ router.get('/', AuthController.isAuthenticated, function(req, res, next) {
 });
 
 io.on('connection', function(socket){
-  console.log('a user connected');
+  console.log(user + ' is connected');
 })
 
 module.exports = router;
