@@ -10,6 +10,7 @@ var logger = require('morgan');
 const session          = require('express-session');
 const expressValidator = require('express-validator');
 var favicon = require('serve-favicon');
+var bodyParser = require('body-parser')
 
 var passport = require('passport');
 
@@ -44,6 +45,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+// app.use(bodyParser.urlencoded({extended: true}));
 
 
 
