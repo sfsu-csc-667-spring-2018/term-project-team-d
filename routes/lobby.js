@@ -1,10 +1,6 @@
 var express = require('express');
-const app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
 var router = express.Router();
 const AuthController = require('../auth/AuthController');
-var port = process.env.PORT || 3000;
 
 /* GET users listing. */
 router.get('/', AuthController.isAuthenticated, function(req, res, next) {
@@ -17,9 +13,5 @@ router.get('/', AuthController.isAuthenticated, function(req, res, next) {
     }
   );
 });
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-})
 
 module.exports = router;
