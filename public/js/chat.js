@@ -1,6 +1,6 @@
   // initializing socket, connection to server
   //var socket = io.connect('https://csc-667-team-f.herokuapp.com:7777');
-  const socket = io.connect('//localhost:3000');
+  const socket = io.connect('http//localhost:3000');
   socket.on('connect', function(data) {
     socket.emit('join', 'Hello server from client');
   });
