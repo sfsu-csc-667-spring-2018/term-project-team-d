@@ -1,6 +1,4 @@
   // initializing socket, connection to server
-  //var socket = io.connect('https://csc-667-team-f.herokuapp.com:7777');
-  //const socket = io('http://localhost:3000');
   const socket = io();
   socket.on('connect', function(data) {
     socket.emit('join', 'Hello server from client');
@@ -14,7 +12,9 @@
   // prevents form from submitting and sends a message to server
   $('#chat').submit(function(){
     var message = $('#message').val();
-    socket.emit('messages', message);
+    var username = $('#user').text();
+    var full_message = username + ': ' + message;
+    socket.emit('messages', full_message);
     this.reset();
     return false;
-  });
+ });
