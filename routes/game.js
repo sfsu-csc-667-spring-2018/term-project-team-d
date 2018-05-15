@@ -13,7 +13,8 @@ router.get('/:id', function(request,response) {
         description: 'Term Project',
         css: ['game.css'],
         games: game,
-        pieces: pieces
+        pieces: pieces,
+        user: request.user
       });
     });
   });

@@ -1,8 +1,8 @@
 var createError = require('http-errors');
 var express = require('express');
 const app = express();
-var http = require('http').Server(app);
-var server = require('http').createServer(app);
+//var http = require('http').Server(app);
+var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -34,9 +34,6 @@ require('./config/passport')(passport);
 if( process.env.NODE_ENV === 'development' ){
   require( "dotenv" ).config();
 }
-
-app.io = require('./sockets')
-
 
 
 // view engine setup
@@ -108,6 +105,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+app.io = io;
+
 io.on('connection', function(client) {
   console.log('Client connected (io)...');
 
@@ -121,5 +120,8 @@ io.on('connection', function(client) {
   });
 });
 
-server.listen(7777);
-module.exports = app;
+
+module.exports = {
+  app: app,
+  server: server
+};
