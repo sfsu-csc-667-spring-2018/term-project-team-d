@@ -107,7 +107,9 @@ app.use(function(err, req, res, next) {
 
 app.io = io;
 
-io.on('connection', function(client) {
+let chatNameSpace = io.of('/chat-namespace');
+
+chatNameSpace.on('connection', function(client) {
   console.log('Client connected (io)...');
 
   client.on('join', function(data) {
@@ -120,6 +122,12 @@ io.on('connection', function(client) {
   });
 });
 
+// let gameNameSpace = io.of('/game-namespace');
+
+// gameNameSpace.on('connection', function(socket) {
+//   socket.on('joingame', function())
+
+// })
 
 module.exports = {
   app: app,

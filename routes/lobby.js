@@ -14,6 +14,4 @@ router.get('/', AuthController.isAuthenticated, function(req, res, next) {
   );
 });
 
-
-
 module.exports = router;

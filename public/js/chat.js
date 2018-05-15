@@ -1,5 +1,5 @@
   // initializing socket, connection to server
-  const socket = io();
+  const socket = io('/chat-namespace');
   socket.on('connect', function(data) {
     socket.emit('join', 'Hello server from client');
   });

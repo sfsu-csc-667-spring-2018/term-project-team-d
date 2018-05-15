@@ -12,6 +12,7 @@ router.get('/:id', function(request,response) {
         title: 'game - CSC 667',
         description: 'Term Project',
         css: ['game.css'],
+        js: ['game.js'],
         games: game,
         pieces: pieces,
         user: request.user

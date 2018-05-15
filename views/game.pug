@@ -2,7 +2,7 @@ extends layout
 block css
     link(rel='stylesheet', href='/stylesheets/game.css')
 block content
-
+  .gameid(style="hidden" gameid=games.id)
   //- div(style="position: relative; overflow: hidden; width: 100%;")
   .chessboard(style="position: relative")
     - var row = 0
@@ -22,7 +22,7 @@ block content
     each piece in pieces
       if piece.user_id === games.white
         if piece.piece_id === 1
-          .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9817;        
+          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9817;        
         else if piece.piece_id === 2
           .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9816;
         else if piece.piece_id === 3
@@ -46,6 +46,7 @@ block content
           .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9819;
         else if piece.piece_id === 6
           .piece(row=piece.y, col=piece.x, captured=piece.captured,owner=piece.user_id) &#9818;
-
+  block scripts
+    script(src='/js/game.js')
           
 
