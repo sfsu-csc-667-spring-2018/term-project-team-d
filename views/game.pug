@@ -20,7 +20,7 @@ block content
           else
             .cell(row = row, col = col, white)
     each piece in pieces
-      if piece.captured === false
+      if !piece.captured
         if piece.user_id === games.white
           if piece.piece_id === 1
             .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9817;
