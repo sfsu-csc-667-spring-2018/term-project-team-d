@@ -1,12 +1,6 @@
 const db = require("../index");
 // const pieces = require("./pieces");
 
-// const attack = (destinationX, destinationY) =>{
-//   const queryString = "SELECT * FROM game_pieces x = $1 and y = $2", [destinationX, destinationY];
-//   console.log(queryString)
-// }
-
-
 const updateDB = (destinationX, destinationY, pieceID) => {
   // console.log(pieceID);
   const query = "UPDATE game_pieces SET x=$1, y=$2 WHERE id=$3";
@@ -17,7 +11,6 @@ const updateDB = (destinationX, destinationY, pieceID) => {
     console.log(err);
   });
 }
-
 
 const attack = (destinationX, destinationY) =>{
   var query = "SELECT * FROM game_pieces WHERE x=$1 AND y=$2";
@@ -30,11 +23,19 @@ const attack = (destinationX, destinationY) =>{
 
 const legalWhitePawnMove = (currentX, currentY, destinationX, destinationY) =>{
 
-  // if (attack(destinationX, destinationY)){
-  //   console.log("IS ATTACK")
-  //   //different logic
-  // }
-  // return Promise.resolve(true);
+  if (attack(destinationX, destinationY)){
+    console.log("IS ATTACK")
+    if( ( ( destinationX === currentX-1 ) || ( destinationX === currentX+1 ) ) && ( destinationY === currentY-1 ) ){
+      var capturedQuery = "UPDATE game_pieces SET captured=$1 WHERE x=$2 AND y=$3";
+      return db.none(capturedQuery, [true, destinationX, destinationY])
+      .catch(err =>{
+        console.log(err);
+      })
+    }
+  }
+  else{
+    Promise.reject("BAD ATTACK PAWN MOVE");
+  }
   if(currentY === 7){
     console.log("PLS HELP")
     if( ( (destinationY === (currentY-2)) || (destinationY === (currentY-1)) ) && (currentX === destinationX)){
@@ -52,7 +53,12 @@ const legalWhitePawnMove = (currentX, currentY, destinationX, destinationY) =>{
 
 const legalBlackPawnMove = (currentX, currentY, destinationX, destinationY) =>{
 
-  // return Promise.resolve(true);
+  if (attack(destinationX, destinationY)){
+    console.log("IS ATTACK")
+    if( ( ( destinationX === currentX-1 ) || ( destinationX === currentX+1 ) ) && ( destinationY === currentY+1 ) ){
+      return Promise.resolve(true);
+    }
+  }
   if(currentY === 2){
       if( ( (destinationY === (currentY+2)) || (destinationY === (currentY+1)) ) && (currentX === destinationX)){
         return Promise.resolve(true);

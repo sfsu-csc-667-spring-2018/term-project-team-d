@@ -20,32 +20,33 @@ block content
           else
             .cell(row = row, col = col, white)
     each piece in pieces
-      if piece.user_id === games.white
-        if piece.piece_id === 1
-          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9817;
-        else if piece.piece_id === 2
-          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9816;
-        else if piece.piece_id === 3
-          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9815;
-        else if piece.piece_id === 4
-          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9814;
-        else if piece.piece_id === 5
-          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9813;
-        else if piece.piece_id === 6
-          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9812;
-      else
-        if piece.piece_id === 1
-          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9823;     
-        else if piece.piece_id === 2
-          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9822;
-        else if piece.piece_id === 3
-          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9821;
-        else if piece.piece_id === 4
-          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9820;
-        else if piece.piece_id === 5
-          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9819;
-        else if piece.piece_id === 6
-          .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9818;
+      if piece.captured === false
+        if piece.user_id === games.white
+          if piece.piece_id === 1
+            .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9817;
+          else if piece.piece_id === 2
+            .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9816;
+          else if piece.piece_id === 3
+            .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9815;
+          else if piece.piece_id === 4
+            .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9814;
+          else if piece.piece_id === 5
+            .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9813;
+          else if piece.piece_id === 6
+            .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "white") &#9812;
+        else
+          if piece.piece_id === 1
+            .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9823;     
+          else if piece.piece_id === 2
+            .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9822;
+          else if piece.piece_id === 3
+            .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9821;
+          else if piece.piece_id === 4
+            .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9820;
+          else if piece.piece_id === 5
+            .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9819;
+          else if piece.piece_id === 6
+            .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9818;
   block scripts
     script(src='/js/game.js')
           
