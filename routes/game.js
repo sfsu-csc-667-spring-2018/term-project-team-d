@@ -22,25 +22,24 @@ router.get('/:id', function(request,response) {
   });
 });
 
-router.post('/create',  GameController.create);
+router.post("/create",  GameController.create);
 
-router.post('/:id/move', function(request, response, next){
-  const {pieceID, pieceType, currentX, currentY, destinationX, destinationY} = request.body;
+router.post("/:id/move", function(request, response, next){
+  // connsole.log("IN ID/move");
+  const {pieceID, playerID, pieceType, pieceColor, currentX, currentY, destinationX, destinationY} = request.body;
   const {user} = request;
   const {id} = request.params;
 
-  console.log(pieceID, pieceType, currentX, currentY, destinationX, destinationY, user,id)
+  console.log(pieceID, playerID, pieceType, currentX, currentY, destinationX, destinationY, user,id)
 
   // console.log("ID!!!!!!!!!!!!!!!!!")
   // console.log(id)
 
-  // GameLogicController.validateMove(id, pieceID, playerID, currentX, currentY, destinationX, destinationY).then(game=>{
-  //   console.log("YOOOO IM HERE")
-  // }).catch(err => {
-  //   console.log("IM HERE ERROR")
-  // })
-
-  response.sendStatus(200);
+  GameLogicController.validateMove(id, pieceID, pieceType, pieceColor, playerID, currentX, currentY, destinationX, destinationY).then(game=>{
+    response.sendStatus(200);
+  }).catch(err => {
+    console.log("ERROR in ROUTES/GAME.JS", err);
+  })
 })
 
 module.exports = router;

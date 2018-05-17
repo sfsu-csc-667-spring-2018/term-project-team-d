@@ -33,13 +33,17 @@ var getPosition = function(item){
 }
 
 function update(piece, currentX, currentY, destinationX, destinationY){
-  var playerID = piece.target.getAttribute('owner');
+  // console.log("IN GAME.JS!!!!!!!!!!!!!!!!!!")
+  // console.log(playerID)
   var pieceID = piece.target.getAttribute('pieceID');
   var pieceType = piece.target.getAttribute('piecetype');
-  var gameid = gameID[0].getAttribute('gameid')
+  var pieceColor = piece.target.getAttribute('piececolor');
+  var gameid = gameID[0].getAttribute('gameid');
+  var playerID = piece.target.getAttribute("playerID");
   var bodyString = (JSON.stringify({
       pieceID,
       pieceType,
+      pieceColor,
       playerID,
       currentX,
       currentY,
