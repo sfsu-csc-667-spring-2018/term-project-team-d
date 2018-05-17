@@ -26,28 +26,24 @@ const legalWhitePawnMove = (currentX, currentY, destinationX, destinationY) =>{
   if (attack(destinationX, destinationY)){
     console.log("IS ATTACK")
     if( ( ( destinationX === currentX-1 ) || ( destinationX === currentX+1 ) ) && ( destinationY === currentY-1 ) ){
-      var capturedQuery = "UPDATE game_pieces SET captured=$1 WHERE x=$2 AND y=$3";
-      return db.none(capturedQuery, [true, destinationX, destinationY])
-      .catch(err =>{
+       const query = "UPDATE game_pieces SET captured=true WHERE x=$1 AND y=$2";
+        db.none(query, [destinationX, destinationY])
+       .catch(err =>{
         console.log(err);
-      })
+       });
+       return Promise.resolve(true);
     }
-  }
-  else{
-    Promise.reject("BAD ATTACK PAWN MOVE");
   }
   if(currentY === 7){
-    console.log("PLS HELP")
-    if( ( (destinationY === (currentY-2)) || (destinationY === (currentY-1)) ) && (currentX === destinationX)){
-      return Promise.resolve(true);
+      if( ( (destinationY === (currentY-2)) || (destinationY === (currentY-1)) ) && (currentX === destinationX)){
+        return Promise.resolve(true);
+      }
     }
-  }
   else if ((destinationY === currentY-1) && (destinationX === currentX)){
-    console.log("NO PLS HELP")
-    return Promise.resolve(true);
+        return Promise.resolve(true);
   }
   else{
-    return Promise.reject("BAD MOVE111111");
+      return Promise.reject(false);
   }
 }
 
@@ -72,34 +68,86 @@ const legalBlackPawnMove = (currentX, currentY, destinationX, destinationY) =>{
   }
 }
 
+// const noPieceInWayVertical = (currentX, currentY, destinationX, destinationY, pieceID) =>{
+//   var query = "SELECT * FROM game_pieces WHERE x=$1 AND id != $2";
+//   var ret = true;
+//   return db.many(query, [destinationX, pieceID])
+//   .then(data=>{
+//     for(var i = 0; i < data.length; i++){
+//       //check if moving up
+//       if (currentY > destinationY){
+//         if (destinationY < data[i].y){
+//           console.log(currentY, destinationY, data[i].y)
+//           ret = false;
+//         }
+//       }
+//       if (currentY < destinationY){
+//         if (destinationY > data[i].y){
+//           ret = false;
+//         }
+//       }
+//     }
+//   }).catch(err=>{
+//     console.log(err)
+//   });
+// }
 
-
-
+// const noPieceInWayHorizontal = (currentX, currentY, destinationX, destinationY, pieceID) =>{
+//   var query = "SELECT * FROM game_pieces WHERE y=$1 AND id != $2";
+//   db.many(query, [destinationY, pieceID])
+//   .then(data=>{
+//     if(data){
+//       return Promise.resolve(true);
+//     }
+//   }).catch(err=>{
+//     console.log(err)
+//   });
+//   return Promise.resolve(false);
+// }
 
 const pawn = (currentX, currentY, destinationX, destinationY, pieceColor) =>{
 
   if(pieceColor === "white"){
-    return  legalWhitePawnMove(currentX, currentY, destinationX, destinationY) 
-      
+    return legalWhitePawnMove(currentX, currentY, destinationX, destinationY); 
   }
   else{
     return legalBlackPawnMove(currentX, currentY, destinationX, destinationY);
   }
-  return Promise.resolve(true);
+  return Promise.resolve(false);
 };
 
 const knight = (currentX, currentY, destinationX, destinationY) =>{
+  var upDownOne = ((destinationY === currentY-1) || (destinationY === currentY+1))
+  var upDownTwo = ((destinationY === currentY-2) || (destinationY === currentY+2))
+  var leftRightOne = ((destinationX === currentX-1) || (destinationX === currentX+1))
+  var leftRightTwo = ((destinationX === currentX-2) || (destinationX === currentX +2))
+
+  if (upDownOne && leftRightTwo){
+    return Promise.resolve(true);
+  }
+  else if (upDownTwo && leftRightOne){
+    return Promise.resolve(true);
+  }
+  return Promise.resolve(false);
   //can make knight moves
-  return Promise.resolve(true);
 };
-const rook = (currentX, currentY, destinationX, destinationY) =>{
-  //castle moves
-  return Promise.resolve(true);
+const rook = (currentX, currentY, destinationX, destinationY, pieceColor, pieceID) =>{
+
+  // if ((currentX === destinationX) && (currentY != destinationY)){
+  //   if (noPieceInWayVertical(currentX, currentY, destinationX, destinationY, pieceID)){
+  //     return Promise.resolve(true);
+  //   }
+  // }else if ((currentY === destinationY) && (currentX != destinationX)){
+  //   return noPieceInWayHorizontal(currentX, currentY, destinationX, destinationY, pieceID);
+  // }    
+  // return Promise.resolve(false);
+
+  // // //castle moves
+  // // return Promise.resolve(true);
 };
 const bishop = (currentX, currentY, destinationX, destinationY) =>{
-  //bishop moves
-  return Promise.resolve(true);
 };
+
 const queen = (currentX, currentY, destinationX, destinationY) =>{
   //queen moves
   return Promise.resolve(true);
@@ -109,7 +157,7 @@ const king = (currentX, currentY, destinationX, destinationY) =>{
   return Promise.resolve(true);
 };
 
-const pieces = {1:pawn, 2:knight, 3:rook, 4:bishop, 5:queen, 6:king};
+const pieces = {1:pawn, 2:knight, 3:bishop, 4:rook, 5:queen, 6:king};
 
 module.exports.validateMove = function(
   id,
@@ -123,15 +171,18 @@ module.exports.validateMove = function(
   destinationY
   ) {
 
-  console.log(pieces[1]);
+  console.log("!!!!!!!!!!!!!!!!");
+  console.log(pieces[pieceType]);
   currentX = parseInt(currentX);
   currentY = parseInt(currentY);
   destinationX = parseInt(destinationX);
   destinationY = parseInt(destinationY);
   pieceType = parseInt(pieceType);
 
-  return pieces[pieceType](currentX, currentY, destinationX, destinationY, pieceColor)
+  return pieces[pieceType](currentX, currentY, destinationX, destinationY, pieceColor, pieceID)
   .then( update =>{
+    console.log('?????????????????');
+    console.log(update);
     if (update){
       updateDB(destinationX, destinationY, pieceID);
     }
