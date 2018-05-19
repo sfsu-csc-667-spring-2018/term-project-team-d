@@ -14,9 +14,10 @@
   // prevents form from submitting and sends a message to server
   $('#chat').submit(function(){
     var message = $('#message').val();
+    if(message != ""){
     var username = $('#user').text();
     var full_message = username + ': ' + message;
     socket.emit('messages', full_message);
-    this.reset();
+    this.reset();}
     return false;
  });
