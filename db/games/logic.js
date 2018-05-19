@@ -2,9 +2,7 @@ const db = require("../index");
 // const pieces = require("./pieces");
 
 const updateDB = (destinationX, destinationY, pieceID) => {
-  // console.log(pieceID);
   const query = "UPDATE game_pieces SET x=$1, y=$2 WHERE id=$3";
-  // return Promise.resolve(true);
   return db.none(query, [destinationX, destinationY, pieceID])
   .catch(err =>{
     console.log("ERR IN updateDB");
@@ -71,7 +69,6 @@ const legalBlackPawnMove = (currentX, currentY, destinationX, destinationY) =>{
 }
 
 const movingVertical = (currentX, currentY, destinationX, destinationY) =>{
-  console.log("MOVING VERTICAL")
   return ( (currentX === destinationX) && (currentY != destinationY) ); 
 }
 
@@ -79,12 +76,26 @@ const movingHorizontal = (currentX, currentY, destinationX, destinationY) =>{
   return ( ( currentY === destinationY ) && ( currentX != destinationX) );
 }
 
+const movingDiagonally = (currentX, currentY, destinationX, destinationY) =>{
+  const xAbsolute = Math.abs(destinationX - currentX);
+  const yAbsolite = Math.abs(destinationY - currentY);
+
+  if( (currentX === destinationX) || (currentY === destinationY) ){
+    return false;
+  }
+
+  if (xAbsolute != yAbsolite){
+    return false;
+  }
+
+  return true;
+}
+
 const nothingInTheWayVeritcal = (currentX, currentY, destinationX, destinationY, pieceID) =>{
   var query = "SELECT * FROM game_pieces WHERE x=$1 AND id!=$2";
 
   return db.any(query, [destinationX, pieceID])
   .then(pieces =>{
-    console.log(currentY, destinationY, pieces)
     for (var i = 0; i < pieces.length; i++){
       if (currentY > destinationY){
         if ( (currentY > pieces[i].y) && (destinationY < pieces[i].y)){
@@ -112,7 +123,6 @@ const nothingInTheWayHorizontal = (currentX, currentY, destinationX, destination
 
   return db.any(query, [destinationY, pieceID])
   .then(pieces =>{
-    console.log(currentX, destinationX, pieces)
     for( var i = 0; i < pieces.length; i++){
       if (currentX < destinationX){
         if ( ( currentX < pieces[i].x ) && ( destinationX > pieces[i].x ) ){
@@ -123,6 +133,43 @@ const nothingInTheWayHorizontal = (currentX, currentY, destinationX, destination
         if ( ( currentX > pieces[i].x ) && ( destinationX < pieces[i].x ) ){
           return Promise.resolve(false);
         }
+      }
+    }
+    return Promise.resolve(true);
+  })
+  .catch(err =>{
+    console.log("ERR IN nothingInTheWayVeritcal");
+    console.log(err);
+  });
+}
+
+
+const nothingInTheWayDiagonally = (currentX, currentY, destinationX, destinationY, pieceID) =>{
+  var query = "SELECT * FROM game_pieces WHERE y=$1 AND id!=$2";
+
+  if (currentX < destinationX){
+    xIncrementer = 1;
+  }
+  else{
+    xIncrementer = -1;
+  }
+
+  if (currentY < destinationY){
+    yIncrementer = 1;
+  }
+  else{
+    yIncrementer = -1;
+  }
+
+  return db.any(query, [destinationY, pieceID])
+  .then(pieces =>{
+    for( var i = 0; i < pieces.length; i++){
+      var y = currentY;
+      for(var x = currentX; x < destinationX; x += xIncrementer){
+        if((pieces[i].x === x) && (pieces[i].y === y)){
+          return Promise.resolve(false);
+        }
+        y += yIncrementer;
       }
     }
     return Promise.resolve(true);
@@ -163,8 +210,6 @@ const knight = (currentX, currentY, destinationX, destinationY) =>{
     }
     return Promise.resolve(true)
   }
-
-  console.log("I BE HERE");
   return Promise.resolve(false);
   //can make knight moves
 };
@@ -200,6 +245,22 @@ const rook = (currentX, currentY, destinationX, destinationY, pieceColor, pieceI
   }
 };
 const bishop = (currentX, currentY, destinationX, destinationY) =>{
+  if (movingDiagonally(currentX, currentY, destinationX, destinationY)){
+    if (nothingInTheWayDiagonally(currentX, currentY, destinationX, destinationY)){
+      if(attack(destinationX, destinationY)){
+        const query = "UPDATE game_pieces SET captured=true WHERE x=$1 AND y=$2";
+        db.none(query, [destinationX, destinationY])
+        .catch(err =>{
+          console.log(err);
+        });
+        return Promise.resolve(true);
+      }
+      return Promise.resolve(true);
+    }
+  }
+  else{
+    return Promise.resolve(false);
+  }
 };
 
 const queen = (currentX, currentY, destinationX, destinationY) =>{

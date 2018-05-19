@@ -30,7 +30,7 @@ router.post("/:id/move", function(request, response, next){
   const {user} = request;
   const {id} = request.params;
 
-  console.log(pieceID, playerID, pieceType, currentX, currentY, destinationX, destinationY, user,id)
+  // console.log(pieceID, playerID, pieceType, currentX, currentY, destinationX, destinationY, user,id)
 
   // console.log("ID!!!!!!!!!!!!!!!!!")
   // console.log(id)
