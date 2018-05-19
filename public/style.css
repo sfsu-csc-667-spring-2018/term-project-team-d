@@ -6,16 +6,18 @@ html, body {
 html,body,li,form,ul {
   padding: 0;
   margin: 0;
+  list-style-type: none;
 }
 
 form {
    padding-bottom: 2%;
 }
 li {
-   list-style: none;
-   width: 100vw;
+  width: 100vw;
+  list-style-type: none;
 }
 
 li:nth-child(odd) { 
    background: #eee; 
+   list-style-type: none;
 }
