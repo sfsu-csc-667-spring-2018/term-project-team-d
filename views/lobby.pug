@@ -10,10 +10,10 @@ block content
             button.btn.btn-primaty(type='submit') CREATE GAME
     .col-md-6
       .card(style='background-color: rgba(255, 255, 255, 0.4);')
-        ul#thread(style='width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;')
+        ul#thread(style='width: auto; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;')
         form#chat
           #user #{user.email}
-          input#message(type="text" placeholder="message" style='width:450px;')
+          input#message(type="text" placeholder="message" style='width:auto;')
           input(type="submit" value="Send")
         script(src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous")
         script(src="/socket.io/socket.io.js")
