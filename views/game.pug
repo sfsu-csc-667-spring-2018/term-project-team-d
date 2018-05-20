@@ -4,6 +4,13 @@ block css
 block content
   .gameid(style="hidden", gameid=games.id)
   //- div(style="position: relative; overflow: hidden; width: 100%;")
+  .col-lg-6.float-right
+    .card(style='background-color: rgba(255, 255, 255, 0.6);')
+      ul#thread(style='width: auto; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;')
+      form#gameChat
+        #user #{user.email}
+        input#message(type="text" placeholder="message" style='width:auto;')
+        input(type="submit" value="Send")
   .chessboard(style="position: relative")
     - var row = 0
     while row++ < 8
@@ -48,6 +55,11 @@ block content
           else if piece.piece_id === 6
             .piece(pieceid = piece.id, row=piece.y, col=piece.x, captured=piece.captured,playerID=piece.user_id, piecetype = piece.piece_id, piececolor = "black") &#9818;
   block scripts
+    script(src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous")
+    script(src="/socket.io/socket.io.js")
     script(src='/js/game.js')
+    script(src='../js/gameChat.js')
+
+
           
 
