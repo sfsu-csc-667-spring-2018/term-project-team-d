@@ -42,4 +42,15 @@ router.post("/:id/move", function(request, response, next){
   })
 })
 
+router.post("/:id/join", AuthController.isAuthenticated, function(request, response, next){
+  const {user} = request;
+  const {id} = request.params;
+
+  let game = GameController.getGame(request,response);
+  if(game.id === id){
+    GameController.joinGame(game, user);
+  }
+  response.render("/:id");
+});
+
 module.exports = router;

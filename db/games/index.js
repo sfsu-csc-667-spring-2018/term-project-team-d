@@ -27,3 +27,10 @@ module.exports.getGame = function(request, response){
     console.log(err)
   });
 }
+
+module.exports.joinGame = function(game, user){
+  if(game.black === 0){
+    game.black = user;
+    gamePieces.updateUser(game)
+  }
+}

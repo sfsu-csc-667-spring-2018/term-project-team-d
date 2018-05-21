@@ -62,8 +62,19 @@ function update(piece, currentX, currentY, destinationX, destinationY){
     console.log(err);
   });
 
-  // const socket = io('/game/${gameID}').
-  // socket.on('update', game =>{
-  //   //update UI
-  // })
+  
 }
+
+const socket = io('/game-namespace');
+
+socket.on('connect', data => {
+  socket.emit('join', 'Hello server from client');    
+});
+
+socket.on('joingame', data => {
+
+});
+
+socket.on('update', data => {
+
+});

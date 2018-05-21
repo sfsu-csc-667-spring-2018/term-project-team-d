@@ -47,3 +47,18 @@ module.exports.getPieces = function(gameId) {
     console.log(err)
   })
 }
+
+module.exports.updateUser = function(game) {
+  models.game_pieces.findAll({
+    where: {
+      game_id: game.gameId
+    }
+  }).then(pieces => {
+      return models.game_pieces.update(
+          { user_id: game.black }, /* set attributes' value */
+          { where: { user_id: 0 }} /* where criteria */
+      );
+  }).catch(err => {
+      console.log(err);
+  });
+}

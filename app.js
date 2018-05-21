@@ -137,12 +137,26 @@ gameChat.on("connection", function(client) {
   });
 });
 
-// let gameNameSpace = io.of('/game-namespace');
+let gameNameSpace = io.of('/game-namespace');
 
-// gameNameSpace.on('connection', function(socket) {
-//   socket.on('joingame', function())
+gameNameSpace.on('connection', function(client) {
+  client.on('joingame', function(){
 
-// })
+  });
+
+  client.on('update', function(){
+
+  });
+
+  client.on('move', function(){
+
+  });
+
+  client.on('badmove', function(){
+    client.emit("thread", data);
+  });
+
+})
 
 module.exports = {
   app: app,
