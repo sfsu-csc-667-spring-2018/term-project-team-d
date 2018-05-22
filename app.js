@@ -106,7 +106,7 @@ app.use(function(err, req, res, next) {
 app.io = io;
 
 let chatNameSpace = io.of("/chat-namespace");
-let gameChat = io.of("/gameChatSocket");
+//let gameChat = io.of("/gameChatSocket");
 
 chatNameSpace.on("connection", function(client) {
   console.log("Lobby chat connected (io)...");
@@ -121,16 +121,23 @@ chatNameSpace.on("connection", function(client) {
   });
 });
 
-gameChat.on("connection", function(client) {
+io.sockets.on("connection", function(socket) {
   console.log("Game chat connected (io)...");
 
-  client.on("join", function(data) {
-    console.log(data);
-  });
+  socket.on('room', function(room) {
+        socket.join(room);
+        socket.room = room;
+        console.log('Hello server from game chatroom: ' + room);
+    });
 
-  client.on("messages", function(data){
-    client.emit("thread", data);
-    client.broadcast.emit("thread", data);
+/*
+  socket.on("join", function(data) {
+    console.log(data);
+  });*/
+
+  socket.on("messages", function(data){
+    io.sockets.in(socket.room).emit("thread", data);
+    //socket.broadcast.emit("thread", data);
   });
 });
 
