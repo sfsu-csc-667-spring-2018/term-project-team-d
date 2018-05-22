@@ -5,9 +5,11 @@ block content
     .col-md-6
       .special-card
         .card-body(style='background-color: rgba(255, 255, 255, 0.3);')  
-          h5.card-title Join a Game
+          input#gameToJoin(type="text" placeholder="Game room #" style='width:auto;')
+          form#join(method='GET' action = '')
+          button.btn.btn-primaty#joinBtn() Join Game
           form(method='POST' action = '/game/create' style='background-color: rgba(255, 255, 255, 0);')
-            button.btn.btn-primaty(type='submit') CREATE GAME
+            button.btn.btn-primaty(type='submit') Create Game
     .col-md-6.float-right
       .card(style='background-color: rgba(255, 255, 255, 0.6);')
         ul#thread(style='width: auto; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;')
@@ -18,3 +20,4 @@ block content
         script(src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous")
         script(src="/socket.io/socket.io.js")
         script(src="js/chat.js")
+
