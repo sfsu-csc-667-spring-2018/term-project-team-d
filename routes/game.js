@@ -25,16 +25,9 @@ router.get('/:id', function(request,response) {
 router.post("/create",  GameController.create);
 
 router.post("/:id/move", function(request, response, next){
-  // connsole.log("IN ID/move");
   const {pieceID, playerID, pieceType, pieceColor, currentX, currentY, destinationX, destinationY} = request.body;
   const {user} = request;
   const {id} = request.params;
-
-  // console.log(pieceID, playerID, pieceType, currentX, currentY, destinationX, destinationY, user,id)
-
-  // console.log("ID!!!!!!!!!!!!!!!!!")
-  // console.log(id)
-
   GameLogicController.validateMove(id, pieceID, pieceType, pieceColor, playerID, currentX, currentY, destinationX, destinationY).then(game=>{
     response.sendStatus(200);
   }).catch(err => {
@@ -42,15 +35,15 @@ router.post("/:id/move", function(request, response, next){
   })
 })
 
-router.post("/:id/join", AuthController.isAuthenticated, function(request, response, next){
-  const {user} = request;
-  const {id} = request.params;
+// router.post("/:id/join", function(request, response, next){
+//   const {user} = request;
+//   const {id} = request.params;
 
-  let game = GameController.getGame(request,response);
-  if(game.id === id){
-    GameController.joinGame(game, user);
-  }
-  response.render("/:id");
-});
+//   let game = GameController.getGame(request,response);
+//   if(game.id === id){
+//     GameController.joinGame(game, user);
+//   }
+//   response.redirect('/:id');
+// });
 
 module.exports = router;

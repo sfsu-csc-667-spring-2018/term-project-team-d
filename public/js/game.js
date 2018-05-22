@@ -33,8 +33,6 @@ var getPosition = function(item){
 }
 
 function update(piece, currentX, currentY, destinationX, destinationY){
-  // console.log("IN GAME.JS!!!!!!!!!!!!!!!!!!")
-  // console.log(playerID)
   var pieceID = piece.target.getAttribute('pieceID');
   var pieceType = piece.target.getAttribute('piecetype');
   var pieceColor = piece.target.getAttribute('piececolor');
@@ -64,17 +62,3 @@ function update(piece, currentX, currentY, destinationX, destinationY){
 
   
 }
-
-const socket = io('/game-namespace');
-
-socket.on('connect', data => {
-  socket.emit('join', 'Hello server from client');    
-});
-
-socket.on('joingame', data => {
-
-});
-
-socket.on('update', data => {
-
-});

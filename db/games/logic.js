@@ -263,9 +263,17 @@ const bishop = (currentX, currentY, destinationX, destinationY) =>{
   }
 };
 
-const queen = (currentX, currentY, destinationX, destinationY) =>{
-  //queen moves
-  return Promise.resolve(true);
+const queen = (currentX, currentY, destinationX, destinationY, pieceColor, pieceID) =>{
+  if ( (movingHorizontal(currentX, currentY, destinationX, destinationY)) || movingVertical(currentX, currentY, destinationX, destinationY)){
+    return rook(currentX, currentY, destinationX, destinationY, pieceColor, pieceID);
+  }
+  else if(movingDiagonally(currentX, currentY, destinationX, destinationY)){
+    return bishop(currentX, currentY, destinationX, destinationY);
+  }
+  else{
+    return Promise.resolve(false);
+  }
+  // //queen moves
 };
 const king = (currentX, currentY, destinationX, destinationY) =>{
   //king moves

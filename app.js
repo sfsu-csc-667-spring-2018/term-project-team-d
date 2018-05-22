@@ -25,9 +25,6 @@ var logoutRouter = require("./routes/authentication/logout");
 var lobbyRouter = require("./routes/lobby");
 var gameRouter = require("./routes/game");
 
-//var chatRouter = require('./routes/chat/message');
-//var moveRouter = require('./routes/game/move');
-//var gameIdRouter = require('.routes/game/id');
 
 require("./config/passport")(passport)
 
@@ -137,26 +134,6 @@ gameChat.on("connection", function(client) {
   });
 });
 
-let gameNameSpace = io.of('/game-namespace');
-
-gameNameSpace.on('connection', function(client) {
-  client.on('joingame', function(){
-
-  });
-
-  client.on('update', function(){
-
-  });
-
-  client.on('move', function(){
-
-  });
-
-  client.on('badmove', function(){
-    client.emit("thread", data);
-  });
-
-})
 
 module.exports = {
   app: app,

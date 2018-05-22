@@ -34,3 +34,18 @@ module.exports.joinGame = function(game, user){
     gamePieces.updateUser(game)
   }
 }
+
+module.exports.getDefaultGames = function(){
+  return models.games.findAll({
+    order: [
+      ['id', 'DESC']
+    ],
+    limit: 10
+  }).then(data => {
+    console.log(data);
+    return data;
+  })
+  .catch(err => {
+    console.log('err')
+  });
+}
