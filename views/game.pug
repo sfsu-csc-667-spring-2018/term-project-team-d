@@ -2,7 +2,7 @@ extends layout
 block css
     link(rel='stylesheet', href='/stylesheets/game.css')
 block content
-  .gameid(style="hidden", gameid=games.id)
+  .gameid#gameID(style="hidden", gameid=games.id)
   //- div(style="position: relative; overflow: hidden; width: 100%;")
   .col-lg-6.float-right
     .card(style='background-color: rgba(255, 255, 255, 0.6);')
