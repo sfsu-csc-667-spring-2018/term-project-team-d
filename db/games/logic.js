@@ -1,18 +1,20 @@
 const db = require("../index");
 // const pieces = require("./pieces");
 
-const updateDB = (destinationX, destinationY, pieceID) => {
-  const query = "UPDATE game_pieces SET x=$1, y=$2 WHERE id=$3";
-  return db.none(query, [destinationX, destinationY, pieceID])
+const updateDB = (destinationX, destinationY, pieceID, id) => {
+  const query = "UPDATE game_pieces SET x=$1, y=$2 WHERE id=$3 AND game_id=$4";
+  id = parseInt(id);
+  return db.none(query, [destinationX, destinationY, pieceID, id])
   .catch(err =>{
     console.log("ERR IN updateDB");
     console.log(err);
   });
 }
 
-const attack = (destinationX, destinationY, playerID) =>{
-  var query = "SELECT * FROM game_pieces WHERE x=$1 AND y=$2";
-  return db.one(query, [destinationX, destinationY])
+const attack = (destinationX, destinationY, playerID, id) =>{
+  id = parseInt(id);
+  var query = "SELECT * FROM game_pieces WHERE x=$1 AND y=$2 AND game_id =$3";
+  return db.one(query, [destinationX, destinationY, id])
   .catch(err =>{
     console.log("ERR IN ATTACK")
     console.log(err)
@@ -81,10 +83,10 @@ const movingDiagonally = (currentX, currentY, destinationX, destinationY) =>{
   return true;
 }
 
-const nothingInTheWayVeritcal = (currentX, currentY, destinationX, destinationY, pieceID) =>{
-  var query = "SELECT * FROM game_pieces WHERE x=$1 AND id!=$2";
+const nothingInTheWayVeritcal = (currentX, currentY, destinationX, destinationY, pieceID, id) =>{
+  var query = "SELECT * FROM game_pieces WHERE x=$1 AND id!=$2 AND game_id =$3";
 
-  return db.any(query, [destinationX, pieceID])
+  return db.any(query, [destinationX, pieceID, id])
   .then(pieces =>{
     for (var i = 0; i < pieces.length; i++){
       if (currentY > destinationY){
@@ -105,11 +107,11 @@ const nothingInTheWayVeritcal = (currentX, currentY, destinationX, destinationY,
   });
 }
 
-const nothingInTheWayHorizontal = (currentX, currentY, destinationX, destinationY, pieceID) =>{
-  var query = "SELECT * FROM game_pieces WHERE y=$1 AND id!=$2";
+const nothingInTheWayHorizontal = (currentX, currentY, destinationX, destinationY, pieceID, id) =>{
+  var query = "SELECT * FROM game_pieces WHERE y=$1 AND id!=$2 AND game_id=$3";
   var piecesInWay = null;
 
-  return db.any(query, [destinationY, pieceID])
+  return db.any(query, [destinationY, pieceID, id])
   .then(pieces =>{
     for( var i = 0; i < pieces.length; i++){
       if (currentX < destinationX){
@@ -132,8 +134,8 @@ const nothingInTheWayHorizontal = (currentX, currentY, destinationX, destination
 }
 
 
-const nothingInTheWayDiagonally = (currentX, currentY, destinationX, destinationY, pieceID) =>{
-  var query = "SELECT * FROM game_pieces WHERE (x BETWEEN $1 AND $2) AND (y BETWEEN $3 AND $4)";
+const nothingInTheWayDiagonally = (currentX, currentY, destinationX, destinationY, pieceID, id) =>{
+  var query = "SELECT * FROM game_pieces WHERE (x BETWEEN $1 AND $2) AND (y BETWEEN $3 AND $4) AND game_id=$5";
   var firstX;
   var secondX;
   var firstY;
@@ -160,9 +162,14 @@ const nothingInTheWayDiagonally = (currentX, currentY, destinationX, destination
     secondY = currentY-1;
     yIncrementer = -1;
   }
+  // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>")
+  // console.log(currentX, destinationX, currentY, destinationY)
+  // console.log(firstX, secondX, firstY, secondY)
+  // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>")
 
-  return db.any(query, [firstX, secondX, firstY, secondY])
+  return db.any(query, [firstX, secondX, firstY, secondY, id])
   .then(pieces =>{
+    // console.log(pieces, "PIECES IN nothingInTheWayDiagonally!!!!!!!!!!!!!!!!!!")
     if(pieces.length > 0){
       return Promise.resolve(false);
     }
@@ -197,9 +204,9 @@ const knight = (currentX, currentY, destinationX, destinationY, pieceColor, piec
   }
   return Promise.resolve(false);
 };
-const rook = (currentX, currentY, destinationX, destinationY, pieceColor, pieceID, playerID) =>{
+const rook = (currentX, currentY, destinationX, destinationY, pieceColor, pieceID, playerID, id) =>{
   if (movingVertical(currentX, currentY, destinationX, destinationY)){
-    return nothingInTheWayVeritcal(currentX, currentY, destinationX, destinationY, pieceID)
+    return nothingInTheWayVeritcal(currentX, currentY, destinationX, destinationY, pieceID, id)
     .then(nothingInTheWayVeritcal => {
       if (nothingInTheWayVeritcal){
         return Promise.resolve(true);
@@ -214,7 +221,7 @@ const rook = (currentX, currentY, destinationX, destinationY, pieceColor, pieceI
     });
   }
   else if (movingHorizontal(currentX, currentY, destinationX, destinationY)){
-    return nothingInTheWayHorizontal(currentX, currentY, destinationX, destinationY, pieceID)
+    return nothingInTheWayHorizontal(currentX, currentY, destinationX, destinationY, pieceID, id)
     .then(nothingInTheWayHorizontal =>{
       if (nothingInTheWayHorizontal){
         return Promise.resolve(true);
@@ -232,10 +239,11 @@ const rook = (currentX, currentY, destinationX, destinationY, pieceColor, pieceI
     return Promise.resolve(false);
   }
 };
-const bishop = (currentX, currentY, destinationX, destinationY, pieceColor, pieceID, playerID) =>{
+const bishop = (currentX, currentY, destinationX, destinationY, pieceColor, pieceID, playerID, id) =>{
   if (movingDiagonally(currentX, currentY, destinationX, destinationY)){
-    return nothingInTheWayDiagonally(currentX, currentY, destinationX, destinationY, pieceID)
+    return nothingInTheWayDiagonally(currentX, currentY, destinationX, destinationY, pieceID, id)
     .then( nothingInTheWayDiagonally =>{
+      // console.log(nothingInTheWayDiagonally, "FUUUUUUUUUUUU")      
       if(nothingInTheWayDiagonally){
         return Promise.resolve(true);
       }
@@ -296,13 +304,15 @@ module.exports.validateMove = function(
   destinationY = parseInt(destinationY);
   pieceType = parseInt(pieceType);
 
-  return pieces[pieceType](currentX, currentY, destinationX, destinationY, pieceColor, pieceID, playerID)
+  return pieces[pieceType](currentX, currentY, destinationX, destinationY, pieceColor, pieceID, playerID, id)
   .then( valid =>{
-    console.log("valid", valid)
+    // console.log("valid", valid)
     if (valid){
-      return attack(destinationX, destinationY, playerID)
+      return attack(destinationX, destinationY, playerID, id)
       .then( attacked => {
+        // console.log("ATTACKED PIECES!!!!!!!")
         if (attacked){
+          // console.log(attacked);
           if (attacked.user_id != playerID){
             updateDB(destinationX, destinationY, pieceID);
             const query = "UPDATE game_pieces SET captured=true WHERE x=$1 AND y=$2";
@@ -310,16 +320,20 @@ module.exports.validateMove = function(
             .catch( err =>{
               console.log(err);
             });
+            updateDB(destinationX, destinationY, pieceID, id);
             return Promise.resolve(true);
           }
         }
         else{
-          updateDB(destinationX, destinationY, pieceID);
+          updateDB(destinationX, destinationY, pieceID, id);
         }
       })
       .catch(err => {
         console.log(err);
       });
+    }
+    else{
+      return Promise.resolve(false);
     }
   })
   .catch(err =>{
