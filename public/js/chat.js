@@ -21,3 +21,10 @@
       this.reset();}
     return false;
  });
+
+  $('#joinBtn').click(function(){
+    console.log("*********" + $('#gameToJoin').val());
+    var action = '/game/' +  $('#gameToJoin').val();
+    document.getElementById('join').action = action;
+    $('#join').submit();
+  })
