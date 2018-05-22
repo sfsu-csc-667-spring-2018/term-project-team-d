@@ -1,7 +1,7 @@
   // initializing socket, connection to server
   var room = document.getElementsByClassName("gameid")[0].getAttribute('gameid');
   console.log(room);
-  const gameChatSocket = io.connect('http://localhost:3000');
+  const gameChatSocket = io.connect();
   gameChatSocket.on('connect', function(data) {
     gameChatSocket.emit('room', room);
     //gameChatSocket.emit('join', 'Hello server from game chat: ' + room);
