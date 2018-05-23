@@ -71,7 +71,7 @@ app.use(
   })
 );
 
-app.use(favicon("./public/img/favicon.ico"));
+app.use(favicon("./public/images/favicon.ico"));
 
 app.use(passport.initialize());
 app.use(passport.session());

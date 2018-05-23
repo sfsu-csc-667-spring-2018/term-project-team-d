@@ -1,15 +1,15 @@
-var express = require('express');
+var express = require( 'express' );
 var router = express.Router();
-const GameController = require('../db/games/index')
-const PieceController = require('../db/games/pieces')
-const AuthController = require('../auth/AuthController')
-const GameLogicController = require('../db/games/logic')
+const GameController = require( '../db/games/index' )
+const PieceController = require( '../db/games/pieces' )
+const AuthController = require( '../auth/AuthController' )
+const GameLogicController = require( '../db/games/logic' )
 let game
 
-router.get('/:id', function(request,response) {
-  GameController.getGame(request,response).then(game => {
-    PieceController.getPieces(game.id).then(pieces =>{
-      response.render('game',{
+router.get( '/:id', function( request,response ) {
+  GameController.getGame( request,response ).then( game => {
+    PieceController.getPieces( game.id ).then( pieces =>{
+      response.render( 'game',{
         title: 'game - CSC 667',
         description: 'Term Project',
         css: ['game.css'],
@@ -17,33 +17,24 @@ router.get('/:id', function(request,response) {
         games: game,
         pieces: pieces,
         user: request.user
-      });
-    });
-  });
-});
+      } );
+    } );
+  } );
+} );
 
-router.post("/create",  GameController.create);
+router.post( "/create",  GameController.create );
 
-router.post("/:id/move", function(request, response, next){
+router.post("/:id/move", function( request, response, next ){
   const {pieceID, playerID, pieceType, pieceColor, currentX, currentY, destinationX, destinationY} = request.body;
   const {user} = request;
   const {id} = request.params;
-  GameLogicController.validateMove(id, pieceID, pieceType, pieceColor, playerID, currentX, currentY, destinationX, destinationY).then(game=>{
-    response.sendStatus(200);
-  }).catch(err => {
-    console.log("ERROR in ROUTES/GAME.JS", err);
-  })
+
+  GameLogicController.validateMove( id, pieceID, pieceType, pieceColor, playerID, currentX, currentY, destinationX, destinationY ).then( game=>{
+    response.sendStatus( 200 );
+  } ).catch(err => {
+    console.log( err );
+  } )
 })
 
-// router.post("/:id/join", function(request, response, next){
-//   const {user} = request;
-//   const {id} = request.params;
-
-//   let game = GameController.getGame(request,response);
-//   if(game.id === id){
-//     GameController.joinGame(game, user);
-//   }
-//   response.redirect('/:id');
-// });
 
 module.exports = router;

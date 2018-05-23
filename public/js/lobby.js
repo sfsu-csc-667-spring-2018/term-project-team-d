@@ -1,3 +1,3 @@
-const gameCreatedSocket = io('/games');
+const gameCreatedSocket = io( '/games' );
 
-gameCreatedSocket.on('created', ({ id, createdBy, createdAt }) => {});
+gameCreatedSocket.on( 'created', ( { id, createdBy, createdAt } ) => {});

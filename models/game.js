@@ -1,11 +1,11 @@
-module.exports = (sequelize, DataTypes) => {
+module.exports = ( sequelize, DataTypes ) => {
   const Game = sequelize.define('games', {
     black: DataTypes.INTEGER,
     white: DataTypes.INTEGER,
     turn: DataTypes.INTEGER
   }, {
     classMethods: {
-      associate: function(models) {
+      associate: function( models ) {
         //associations can be defined here
       }
     }
