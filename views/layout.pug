@@ -7,12 +7,12 @@ html
     block css
       
   body    
-    .navbar.bg-white.border-bottom.sticky-top
-      a.navbar-header(href="/"): img(src="../chessImage.jpg" style="width:30px; height:30px;")
+    .navbar.sticky-top
+      a.navbar-header(href="/lobby"): img(src="../images/chessImage.jpg" style="width:30px; height:30px;")
       nav.navbar-right
-        a.btn.btn-outline-success(href="/register") Register
-        a.btn.btn-outline-primary(href="/login") Login
-        a.btn.btn-outline-primary(href='/logout') Logout
+        a.btn.btn-light(href="/register") Register
+        a.btn.btn-outline-light(href="/login") Login
+        a.btn.btn-outline-light(href='/logout') Logout
     .container-fluid
       .jumbotron.text-center  
         h1.display-4 Welcome to our chess game!

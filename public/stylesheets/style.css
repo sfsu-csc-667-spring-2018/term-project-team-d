@@ -1,8 +1,17 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url(/images/chess_pieces.jpg);
+  background-size: cover;
 }
-
+.jumbotron.text-center {background-color: rgba(255, 255, 255, 0); color: black; text-shadow: 2px 2px rgba(255, 255, 255, 0.4);}
+.navbar {background-color: rgba(255, 255, 255, 0);}
+.main.container{color: black; text-shadow: 2px 2px rgba(255, 255, 255, 0.4);}
 a {
   color: #00B7FF;
+}
+li {
+  width: 100vw;
+  list-style-type: none;
+  color: black;
 }

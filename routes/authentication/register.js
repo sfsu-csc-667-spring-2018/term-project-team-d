@@ -1,13 +1,12 @@
-var express = require('express');
+var express = require( 'express' );
 var router = express.Router();
 
-const user = require('../../db/users/index');
-const AuthController = require('../../auth/AuthController')
+const AuthController = require( '../../auth/AuthController' )
 
-router.get('/', function (req, res) {
-  res.render('register',
+router.get( '/', function( request, response ) {
+  response.render('register',
     { title: 'Register - CSC 667',
-      user: req.user,
+      user: request.user,
       description: 'Term Project',
       css: ['bootstrap.min.css','font-awesome.min.css'],
       js: ['jquery.min.js','bootstrap.min.js']

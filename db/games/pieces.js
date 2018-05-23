@@ -1,7 +1,7 @@
-const models = require('../../models')
+const models = require( '../../models' )
 
-module.exports.populate = function(gameId, userId) {
-  models.game_pieces.bulkCreate([
+module.exports.populate = function( gameId, userId ) {
+  models.game_pieces.bulkCreate( [
     {game_id: gameId, piece_id: 4, captured: false, x:1, y:1},
     {game_id: gameId, piece_id: 2, captured: false,x:2, y:1},
     {game_id: gameId, piece_id: 3, captured: false, x:3, y:1},
@@ -34,16 +34,33 @@ module.exports.populate = function(gameId, userId) {
     {game_id: gameId, piece_id: 3,user_id: userId, captured: false, x:6, y:8},
     {game_id: gameId, piece_id: 2,user_id: userId, captured: false, x:7, y:8},
     {game_id: gameId, piece_id: 4,user_id: userId, captured: false, x:8, y:8}    
-  ]).catch(err => {
-    console.log(err)
-  })
+  ] ).catch( err => {
+    console.log( err )
+  } )
 }
-module.exports.getPieces = function(gameId) {
+module.exports.getPieces = function( gameId ) {
   return models.game_pieces.findAll({
     where: {
       game_id: gameId
     }
-  }).catch(err => {
-    console.log(err)
-  })
+  } ).catch(err => {
+    console.log( err )
+  } )
+}
+
+
+//DOESNT WORK. EFFORT?
+module.exports.updateUser = function( game ) {
+  models.game_pieces.findAll( {
+    where: {
+      game_id: game.gameId
+    }
+  } ).then( pieces => {
+      return models.game_pieces.update(
+          { user_id: game.black }, /* set attributes' value */
+          { where: { user_id: 0 }} /* where criteria */
+      );
+  } ).catch( err => {
+      console.log( err );
+  });
 }

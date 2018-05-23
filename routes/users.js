@@ -2,16 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
-router.get('/cool', function(req, res, next){
-  res.render('users', {
-    title: 'Express',
-    name: 'Dylan',  
-  });
-});
-
+router.get('/', function(request, response, next) {
+  response.send( 'respond with a resource' );
+} );
 
 module.exports = router;

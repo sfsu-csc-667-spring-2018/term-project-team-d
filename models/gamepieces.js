@@ -1,6 +1,6 @@
 'use strict';
-module.exports = (sequelize, DataTypes) => {
-  const gamepiece = sequelize.define('game_pieces', {
+module.exports = ( sequelize, DataTypes ) => {
+  const gamepiece = sequelize.define( 'game_pieces', {
     game_id: DataTypes.INTEGER,
     piece_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
@@ -9,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
     y: DataTypes.INTEGER,
   }, {
     classMethods: {
-      associate: function(models) {
+      associate: function( models ) {
         // associations can be defined here
       }
     }
-  });
+  } );
   return gamepiece;
 };
